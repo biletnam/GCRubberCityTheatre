@@ -53,7 +53,7 @@ _io.on('connection', function(_socket){
 	//---messages
 	_socket.on('message', function(_messageValue){
 		console.log('message event: ' + _messageValue);
-		if(_messageValue){
+		if(_messageValue.message && _messageValue.message.trim()){
 			var _now = new Date();
 			var _time = _now.getHours();
 			var _amPm = (_time >= 12 ? 'PM' : 'AM');
