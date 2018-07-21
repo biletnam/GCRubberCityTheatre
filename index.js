@@ -13,6 +13,7 @@ var _userPassword = '1234'; //--remove when done if we're keeping settings pane
 //--sockets
 _io.on('connection', function(_socket){
 	var _loginType;
+	var _userName;
 	console.log('connection');
 	//---login
 	_socket.on('adminLogin', function(_password){
@@ -29,9 +30,10 @@ _io.on('connection', function(_socket){
 			});
 		}
 	});
-	_socket.on('userLogin', function(_password){
+	_socket.on('userLogin', function(_data){
 		console.log('userLogin event');
-		if(_userPassword && _password === _userPassword){
+		if(_userPassword && _data.name && _data.password === _userPassword){
+			_userName = _data.name;
 			_socket.emit('userLoggedIn');
 			_loginType = 'user';
 			_approvedMessages.forEach(function(_message){
@@ -44,7 +46,8 @@ _io.on('connection', function(_socket){
 		console.log('message event: ' + _messageValue);
 		if(_messageValue){
 			var _message = {
-				type: _loginType
+				name: _userName
+				,type: _loginType
 				,value: _messageValue
 			};
 			if(_loginType === 'admin'){
