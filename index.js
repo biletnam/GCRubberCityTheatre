@@ -12,6 +12,7 @@ var _userMessages = [];
 var _adminPassword = process.env['ADMIN_PASSWORD'] || '123456';
 var _adminUsers = [];
 var _userPassword = process.env['USER_PASSWORD'] || '1234';
+var sanitizeHtml = require('sanitize-html');
 
 //--sockets
 _io.on('connection', function(_socket){
@@ -71,7 +72,7 @@ _io.on('connection', function(_socket){
 				,time: _time
 				,dateTime: _now
 				,type: _loginType
-				,value: _messageValue.message
+				,value: sanitizeHtml(_messageValue.message)
 			};
 			if(_loginType === 'admin'){
 				console.log('publicMessage received: ' + _messageValue);
