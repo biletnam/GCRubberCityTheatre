@@ -4,7 +4,7 @@ var _http = require('http').Server(_app);
 var _io = require('socket.io')(_http);
 
 //--data
-var _adminUserNamesString = process.env['ADMIN_NAMES'] || 'Admin';
+var _adminUserNamesString = process.env['ADMIN_NAMES'] || 'Admin|Other Person';
 var _adminUserNames = _adminUserNamesString.split('|');
 var _approvedMessages = [];
 var _users = [];
@@ -57,11 +57,11 @@ _io.on('connection', function(_socket){
 			_time += ':' + _now.getMinutes() + ' ' + _amPm;
 			console.log('time: ' + _time);
 			var _message = {
-				name: _userName
+				name: _messageValue.sender
 				,time: _time
 				,dateTime: _now
 				,type: _loginType
-				,value: _messageValue
+				,value: _messageValue.message
 			};
 			if(_loginType === 'admin'){
 				console.log('publicMessage received: ' + _messageValue);

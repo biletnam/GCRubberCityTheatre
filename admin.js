@@ -54,7 +54,10 @@ jQuery(function(){
 			_messageListEl.html(_currentMessages);
 		}
 		_formEl.on('submit', function(){
-			var _message = _messageEl.val();
+			var _message = {
+				message: _messageEl.val(),
+				sender: _formEl.find('[name="sender"]').val()
+			};
 			if(_message){
 				_socket.emit('message', _message);
 				_messageEl.val('');
@@ -102,10 +105,10 @@ jQuery(function(){
 		var _liEl = jQuery('<li>', {'data-type': _message.type});
 		switch(_message.type){
 			case 'user':
-				_messageListEl.append(_liEl.text(_message.value));
+				_messageListEl.append(_liEl.text(`${_message.name}: ${_message.value}`));
 			break;
 			case 'admin':
-				_messageListEl.append(_liEl.text(_message.value));
+				_messageListEl.append(_liEl.text(`${_message.name}: ${_message.value}`));
 			break;
 		}
 	});

@@ -2,6 +2,7 @@ jQuery(function(){
 	var _socket = io();
 	var _app = jQuery('.app');
 	var _messageListEl;
+	var _userName;
 
 	//--controller
 	var showLoginView = function(){
@@ -16,8 +17,9 @@ jQuery(function(){
 		);
 		var _loginForm = _app.find('.loginForm');
 		_loginForm.on('submit', function(){
+			_userName = _loginForm.find('.nameField').val();
 			_socket.emit('userLogin', {
-				'name': _loginForm.find('.nameField').val()
+				'name': _userName
 				,password: _loginForm.find('.passwordField').val()
 			});
 			return false;
@@ -34,7 +36,10 @@ jQuery(function(){
 		var _messageEl = _formEl.find('.messageField');
 		_messageListEl = _app.find('.messagesList');
 		_formEl.on('submit', function(){
-			var _message = _messageEl.val();
+			var _message = {
+				message: _messageEl.val(),
+				sender: _userName
+			};
 			if(_message){
 				_socket.emit('message', _message);
 				_messageEl.val('');
@@ -47,13 +52,13 @@ jQuery(function(){
 	showLoginView();
 	_socket.on('message', function(_message){
 		console.log('message: ' + _message);
-		var _liEl = jQuery('<li>', {'data-type': _message.type});
+		var _liEl = jQuery(`<li>${_message.name}`, {'data-type': _message.type});
 		switch(_message.type){
 			case 'user':
-				_messageListEl.append(_liEl.text(_message.value));
+				_messageListEl.append(_liEl.text(`${_message.name}: ${_message.value}`));
 			break;
 			case 'admin':
-				_messageListEl.append(_liEl.text(_message.value));
+				_messageListEl.append(_liEl.text(`${_message.name}: ${_message.value}`));
 			break;
 		}
 	});
