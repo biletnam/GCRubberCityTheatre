@@ -69,6 +69,8 @@ jQuery(function(){
 	showLoginView();
 	_socket.on('message', function(_message){
 		console.log('message: ' + _message);
+		let momentDate = moment(_message.dateTime)
+		_message.time = momentDate.format('h:mm')
 		var _liEl = jQuery(`<li>${_message.name}`, {'data-type': _message.type});
 		switch(_message.type){
 			case 'user':
