@@ -33,11 +33,15 @@ jQuery(function(){
 	var showLoginView = function(){
 		_currentMessages = undefined;
 		_setMainContent(
-			'<form class="loginForm">'
-				+ '<div class="input-group">'
-					+ '<input class="passwordField form-control" name="password" autocomplete="off" autofocus="autofocus" type="password" />'
-					+ '<div class="input-group-append">'
-						+ '<button class="btn btn-outline-secondary">Log In</button>'
+			'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
+				+ '<div class="form-group">'
+					+ '<label for="password">Admin Password</label>'
+					+ '<div class="input-group">'
+
+						+ '<input class="passwordField form-control" name="password" autocomplete="off" autofocus="autofocus" type="password" />'
+						+ '<div class="input-group-append">'
+							+ '<button>Log In</button>'
+						+ '</div>'
 					+ '</div>'
 				+ '</div>'
 			+ '</form>'
@@ -88,12 +92,16 @@ jQuery(function(){
 	};
 	var showSettingsView = function(){
 		_setMainContent(
-			'<form class="settingsForm">'
+			'<form class="settingsForm" style="max-width:600px; margin:auto; padding:10px">'
+				+ '<div class="form-group">'
 				+ '<label for="pinField">Pin</label>'
-				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
+				+ '<input class="pinField form-control" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
+				+ '</div>'
+				+ '<div class="form-group">'
 				+ '<label for="adminNamesField">Names</label>'
-				+ '<input class="adminNamesField" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.adminNames ? _settings.adminNames.join(', ') : null) + '" />'
-				+ '<button>Save</button>'
+				+ '<input class="adminNamesField form-control" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.adminNames ? _settings.adminNames.join(', ') : null) + '" />'
+				+ '</div>'
+				+ '<button class="btn btn-default">Save</button>'
 			+ '</form>'
 		);
 		var _form = _app.find('.settingsForm');
@@ -152,8 +160,6 @@ jQuery(function(){
 
 								<div>
 									${_message.value}
-								</div>
-								<div class="user profile-pic">
 								</div>
 							</div>
 						</div>

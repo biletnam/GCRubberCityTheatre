@@ -10,7 +10,7 @@ jQuery(function(){
 			'<nav class="navbar navbar-expand-lg navbar-light bg-light">'
 			+	'<a class="navbar-brand">Rubber City Theatre</a>'
 			+	'</nav>'
-			+	'<form class="loginForm" style="padding:10px">'
+			+	'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
 				+ '<div class="form-group">'
 				+ '<label for="nameField">Name</label>'
 				+ '<input type="text" class="nameField form-control" id="nameField" name="name" />'
