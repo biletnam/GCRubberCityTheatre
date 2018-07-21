@@ -95,6 +95,10 @@ _io.on('connection', function(_socket){
 	_socket.on('setSettings', function(_newSettings){
 		if(_loginType === 'admin'){
 			_userPassword = _newSettings.pin;
+			_adminUserNames = _newSettings.adminNames.split(',').map(function(_name){ return _name.trim(); });
+			_io.emit('setSettings', {
+				adminNames: _adminUserNames
+			});
 		}
 	});
 });
