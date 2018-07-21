@@ -8,12 +8,13 @@ var _users = [];
 var _userMessages = [];
 var _adminPassword = '123456';
 var _adminUsers = [];
-var _userPassword = '1234';
+var _userPassword = '1234'; //--remove when done if we're keeping settings pane
 
 //--sockets
 _io.on('connection', function(_socket){
 	var _loginType;
 	console.log('connection');
+	//---login
 	_socket.on('adminLogin', function(_password){
 		console.log('adminLogin event');
 		if(_password === _adminPassword){
@@ -38,6 +39,7 @@ _io.on('connection', function(_socket){
 			});
 		}
 	});
+	//---messages
 	_socket.on('message', function(_messageValue){
 		console.log('message event: ' + _messageValue);
 		if(_messageValue){
@@ -61,6 +63,12 @@ _io.on('connection', function(_socket){
 					_adminUser.emit('message', _message);
 				});
 			}
+		}
+	});
+	//---settings
+	_socket.on('setSettings', function(_newSettings){
+		if(_loginType === 'admin'){
+			_userPassword = _newSettings.pin;
 		}
 	});
 });
