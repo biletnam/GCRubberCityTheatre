@@ -1,0 +1,9 @@
+{
+  "name": "Rubber City Theater Chat",
+  "version": "0.0.0",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "socket.io": "^2.1.1"
+  }
+}

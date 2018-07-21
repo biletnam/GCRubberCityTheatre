@@ -1,0 +1,6 @@
+*~
+*.retry
+*.swo
+*.swp
+.DS_Store
+/node_modules

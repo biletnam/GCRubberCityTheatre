@@ -1,0 +1,31 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body, html{ margin: 0; padding: 0; }
+.app{
+	display: grid;
+	grid-template-areas: 'messages' 'form';
+	grid-template-rows: auto min-content;
+	height: 100%;
+	position: fixed;
+	width: 100%;
+}
+.app[data-mode="admin"]{
+	grid-template-areas: 'approvedMessages messages' 'form';
+	/* grid-template-columns: auto auto; */
+}
+.messageForm { background: #000; grid-area: form; padding: 3px; }
+.messageForm input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+.messageForm button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+.messagesList{
+	grid-area: messages;
+	list-style-type: none;
+	margin: 0;
+	overflow: auto;
+	padding: 0;
+}
+.messagesList li {
+	background: #eeeeee; background: #eeeeeeaa;
+	padding: 5px 10px;
+}
+.messagesList li[data-type="admin"]{
+	background: #aaeeaa; background: #aaeeaaaa;
+}
