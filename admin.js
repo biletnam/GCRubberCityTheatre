@@ -1,15 +1,22 @@
 jQuery(function(){
 	var _socket = io();
 	var _app = jQuery('.app');
+	var _currentView;
 
-	var _adminUserNames = jQuery('[data-admin-names]').data('adminNames').split('|');
 	var _currentMessages;
 	var _loggedIn = false;
+	var _settings = {
+		adminNames: jQuery('[data-admin-names]').data('adminNames').split('|')
+	};
 
 	_app.html(
-		'<header class="appHeader"><nav>'
-			+ '<button class="messagesNavAction">Messages</button>'
-			+ '<button class="settingsNavAction">Settings</button>'
+		'<header class="appHeader">'
+			+ '<nav class="navbar navbar-expand-lg navbar-light bg-light">'
+			+ '<a class="navbar-brand">Rubber City Theatre - Admin</a>'
+			+ '<ul class="navbar-nav">'
+			+ '<li class="nav-item"><a class="settingsNavAction nav-link">Settings</a></li>'
+			+ '<li class="nav-item"><a class="messagesNavAction nav-link">Messages</a></li>'
+			+ '</ul>'
 		+ '</nav></header>'
 		+ '<main class="appMain"><span class="loading">Loading…</span></main>'
 	);
@@ -35,17 +42,16 @@ jQuery(function(){
 			_socket.emit('adminLogin', _loginForm.find('.passwordField').val());
 			return false;
 		});
+		_currentView = 'login';
 	};
 	var showMessageView = function(){
 		console.log('_currentMessages', _currentMessages);
-		var _nameOptions = _adminUserNames.map(function(name) { return `<option>${name}</option>`; });
+		var _nameOptions = _settings.adminNames.map(function(name) { return `<option>${name}</option>`; });
 		_setMainContent(`
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand">Rubber City Theatre</a>
-			</nav>
+
 			<div class="messagesList"></div>
 			<form class="messageForm fixed-bottom">
-				<select name="sender">
+				<select class="custom-select" name="sender">
 					${_nameOptions}
 				</select>
 				<div class="input-group">
@@ -73,12 +79,15 @@ jQuery(function(){
 			}
 			return false;
 		});
+		_currentView = 'message';
 	};
 	var showSettingsView = function(){
 		_setMainContent(
 			'<form class="settingsForm">'
 				+ '<label for="pinField">Pin</label>'
-				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" />'
+				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
+				+ '<label for="adminNamesField">Names</label>'
+				+ '<input class="adminNamesField" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.adminNames ? _settings.adminNames.join(', ') : null) + '" />'
 				+ '<button>Save</button>'
 			+ '</form>'
 		);
@@ -86,9 +95,11 @@ jQuery(function(){
 		_form.on('submit', function(){
 			_socket.emit('setSettings', {
 				'pin': _form.find('.pinField').val()
+				,'adminNames': _form.find('.adminNamesField').val()
 			});
 			return false;
 		});
+		_currentView = 'messages';
 	};
 
 	//--routing
@@ -126,7 +137,7 @@ jQuery(function(){
 		var _liEl = jQuery('<li>', {'data-type': _message.type});
 		switch(_message.type){
 			case 'user':
-				_messageListEl.append(jQuery(`
+				_messageListEl.prepend(jQuery(`
 					<div class="card">
 						<div class="card-body">
 							<h6 class="card-title user-header">
@@ -145,7 +156,7 @@ jQuery(function(){
 				`));
 			break;
 			case 'admin':
-				_messageListEl.append(jQuery(`
+				_messageListEl.prepend(jQuery(`
 						<div class="card">
 							<div class="card-body" >
 								<h6 class="card-title admin-header">
@@ -169,5 +180,15 @@ jQuery(function(){
 	_socket.on('reconnect', function(){
 		_loggedIn = false;
 		showLoginView();
+	});
+	_socket.on('setSettings', function(_newSettings){
+		_settings = _newSettings;
+		if(_newSettings.adminNames){
+			//--rerender message view because name dropdown may have changed
+			if(_currentView === 'messages'){
+				showMessageView();
+			}
+		}
+
 	});
 });
