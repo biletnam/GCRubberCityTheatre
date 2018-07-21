@@ -1,14 +1,17 @@
 var _app = require('express')();
+var _fs = require('fs');
 var _http = require('http').Server(_app);
 var _io = require('socket.io')(_http);
 
 //--data
+var _adminUserNamesString = process.env['ADMIN_NAMES'] || 'Admin';
+var _adminUserNames = _adminUserNamesString.split('|');
 var _approvedMessages = [];
 var _users = [];
 var _userMessages = [];
-var _adminPassword = process.env['ADMIN_PASSWORD']
+var _adminPassword = process.env['ADMIN_PASSWORD'] || '123456';
 var _adminUsers = [];
-var _userPassword = process.env['USER_PASSWORD'];
+var _userPassword = process.env['USER_PASSWORD'] || '1234';
 
 //--sockets
 _io.on('connection', function(_socket){
@@ -73,7 +76,8 @@ _app.get('/', function(_request, _response){
 	_response.sendFile(__dirname + '/index.html');
 });
 _app.get('/admin', function(_request, _response){
-	_response.sendFile(__dirname + '/admin.html');
+	const output = _fs.readFileSync(__dirname + '/admin.html').toString().replace('ADMIN_NAMES', _adminUserNamesString);
+	_response.send(output);
 });
 //---assets
 _app.get('/admin.css', function(_request, _response){

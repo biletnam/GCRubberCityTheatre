@@ -1,6 +1,9 @@
 jQuery(function(){
 	var _socket = io();
 	var _app = jQuery('.app');
+
+	var _adminUserNames = jQuery('[data-admin-names]').data('adminNames').split('|');
+
 	_app.html(
 		'<header class="appHeader"><nav></nav></header>'
 		+ '<main class="appMain"><span class="loading">Loading…</span></main>'
@@ -25,6 +28,9 @@ jQuery(function(){
 		_appMain.html(
 			'<ul class="messagesList"></ul>'
 			+ '<form class="messageForm">'
+				+ '<select name="sender">'
+					+ _adminUserNames.map(function(name) { return '<option>' + name + '</option>'})
+				+ '</select>'
 				+ '<input class="messageField" name="message" autocomplete="off" autofocus="autofocus" required="required" /><button>Send</button>'
 			+ '</form>'
 		);
