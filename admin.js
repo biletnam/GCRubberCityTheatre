@@ -1,10 +1,13 @@
 jQuery(function(){
 	var _socket = io();
 	var _app = jQuery('.app');
+	var _currentView;
 
-	var _adminUserNames = jQuery('[data-admin-names]').data('adminNames').split('|');
 	var _currentMessages;
 	var _loggedIn = false;
+	var _settings = {
+		adminNames: jQuery('[data-admin-names]').data('adminNames').split('|')
+	};
 
 	_app.html(
 		'<header class="appHeader"><nav class="navbar navbar-expand-lg navbar-light bg-light">'
@@ -37,10 +40,11 @@ jQuery(function(){
 			_socket.emit('adminLogin', _loginForm.find('.passwordField').val());
 			return false;
 		});
+		_currentView = 'login';
 	};
 	var showMessageView = function(){
 		console.log('_currentMessages', _currentMessages);
-		var _nameOptions = _adminUserNames.map(function(name) { return `<option>${name}</option>`; });
+		var _nameOptions = _settings.adminNames.map(function(name) { return `<option>${name}</option>`; });
 		_setMainContent(`
 
 			<div class="messagesList"></div>
@@ -73,12 +77,15 @@ jQuery(function(){
 			}
 			return false;
 		});
+		_currentView = 'message';
 	};
 	var showSettingsView = function(){
 		_setMainContent(
 			'<form class="settingsForm">'
 				+ '<label for="pinField">Pin</label>'
-				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" />'
+				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
+				+ '<label for="adminNamesField">Names</label>'
+				+ '<input class="adminNamesField" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.adminNames ? _settings.adminNames.join(', ') : null) + '" />'
 				+ '<button>Save</button>'
 			+ '</form>'
 		);
@@ -86,9 +93,11 @@ jQuery(function(){
 		_form.on('submit', function(){
 			_socket.emit('setSettings', {
 				'pin': _form.find('.pinField').val()
+				,'adminNames': _form.find('.adminNamesField').val()
 			});
 			return false;
 		});
+		_currentView = 'messages';
 	};
 
 	//--routing
@@ -169,5 +178,15 @@ jQuery(function(){
 	_socket.on('reconnect', function(){
 		_loggedIn = false;
 		showLoginView();
+	});
+	_socket.on('setSettings', function(_newSettings){
+		_settings = _newSettings;
+		if(_newSettings.adminNames){
+			//--rerender message view because name dropdown may have changed
+			if(_currentView === 'messages'){
+				showMessageView();
+			}
+		}
+
 	});
 });

@@ -62,7 +62,7 @@ _io.on('connection', function(_socket){
 			}
 			var _minutes = _now.getMinutes();
 			if(_minutes < 9){
-				_minutes = '0' + _minutes;
+				_minutes = '0' + _minutes.toString();
 			}
 			_time += ':' + _minutes + ' ' + _amPm;
 			console.log('time: ' + _time);
@@ -95,6 +95,15 @@ _io.on('connection', function(_socket){
 	_socket.on('setSettings', function(_newSettings){
 		if(_loginType === 'admin'){
 			_userPassword = _newSettings.pin;
+			_adminUserNames = _newSettings.adminNames.split(',').map(function(_name){ return _name.trim(); });
+			//--tell all admin users about change.  They need to know for the `adminNames` in their list.
+			//-! Not sending to other users because of pin and because we don't have a list of other users
+			_adminUsers.forEach(function(_adminUser){
+				_adminUser.emit('setSettings', {
+					adminNames: _adminUserNames
+					,pin: _userPassword
+				});
+			});
 		}
 	});
 });
