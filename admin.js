@@ -7,9 +7,11 @@ jQuery(function(){
 	var _loggedIn = false;
 
 	_app.html(
-		'<header class="appHeader"><nav>'
-			+ '<button class="messagesNavAction">Messages</button>'
-			+ '<button class="settingsNavAction">Settings</button>'
+		'<header class="appHeader"><nav class="navbar navbar-expand-lg navbar-light bg-light">'
+			+ '<ul class="navbar-nav mr-auto">'
+			+ '<li class="nav-item"><a class="settingsNavAction nav-link">Settings</a></li>'
+			+ '<li class="nav-item"><a class="messagesNavAction nav-link">Messages</a></li>'
+			+ '</ul>'
 		+ '</nav></header>'
 		+ '<main class="appMain"><span class="loading">Loading…</span></main>'
 	);
@@ -40,12 +42,10 @@ jQuery(function(){
 		console.log('_currentMessages', _currentMessages);
 		var _nameOptions = _adminUserNames.map(function(name) { return `<option>${name}</option>`; });
 		_setMainContent(`
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand">Rubber City Theatre</a>
-			</nav>
+
 			<div class="messagesList"></div>
 			<form class="messageForm fixed-bottom">
-				<select name="sender">
+				<select class="custom-select" name="sender">
 					${_nameOptions}
 				</select>
 				<div class="input-group">
@@ -126,7 +126,7 @@ jQuery(function(){
 		var _liEl = jQuery('<li>', {'data-type': _message.type});
 		switch(_message.type){
 			case 'user':
-				_messageListEl.append(jQuery(`
+				_messageListEl.prepend(jQuery(`
 					<div class="card">
 						<div class="card-body">
 							<h6 class="card-title user-header">
@@ -145,7 +145,7 @@ jQuery(function(){
 				`));
 			break;
 			case 'admin':
-				_messageListEl.append(jQuery(`
+				_messageListEl.prepend(jQuery(`
 						<div class="card">
 							<div class="card-body" >
 								<h6 class="card-title admin-header">
