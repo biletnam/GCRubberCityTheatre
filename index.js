@@ -31,17 +31,23 @@ _io.on('connection', function(_socket){
 			_userMessages.forEach(function(_message){
 				_socket.emit('message', _message);
 			});
+		}else{
+			_socket.emit('formError', {message: 'Invalid password.'});
 		}
 	});
 	_socket.on('userLogin', function(_data){
 		console.log('userLogin event');
-		if(_userPassword && _data.name && _data.password === _userPassword){
+		if(!_data.name){
+			_socket.emit('formError', {message: 'Name must be set.'});
+		}else if(_userPassword && _data.password === _userPassword){
 			_userName = _data.name;
 			_socket.emit('userLoggedIn');
 			_loginType = 'user';
 			_approvedMessages.forEach(function(_message){
 				_socket.emit('message', _message);
 			});
+		}else{
+			_socket.emit('formError', {message: 'Invalid password.'});
 		}
 	});
 	//---messages

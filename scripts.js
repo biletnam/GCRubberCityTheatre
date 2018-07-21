@@ -62,6 +62,17 @@ jQuery(function(){
 			break;
 		}
 	});
+	_socket.on('formError', function(_error){
+		var _formEl = _app.find('form');
+		if(_formEl.length){
+			var _formErrorEl = _formEl.find('.error');
+			if(!_formErrorEl.length){
+				_formErrorEl = jQuery('<div class="error">');
+				_formEl.prepend(_formErrorEl);
+			}
+			_formErrorEl.html(_error.message);
+		}
+	});
 	_socket.on('reconnect', function(){
 		showLoginView();
 	});
