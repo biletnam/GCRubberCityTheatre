@@ -62,7 +62,7 @@ _io.on('connection', function(_socket){
 			}
 			var _minutes = _now.getMinutes();
 			if(_minutes < 9){
-				_minutes = '0' + _minutes;
+				_minutes = '0' + _minutes.toString();
 			}
 			_time += ':' + _minutes + ' ' + _amPm;
 			console.log('time: ' + _time);
