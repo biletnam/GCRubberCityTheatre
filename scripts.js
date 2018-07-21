@@ -72,7 +72,7 @@ jQuery(function(){
 		var _liEl = jQuery(`<li>${_message.name}`, {'data-type': _message.type});
 		switch(_message.type){
 			case 'user':
-				_messageListEl.append(jQuery(`
+				_messageListEl.prepend(jQuery(`
 					<div class="card">
 						<div class="card-body">
 							<h6 class="card-title user-header">
@@ -83,15 +83,14 @@ jQuery(function(){
 								<div>
 									${_message.value}
 								</div>
-								<div class="user profile-pic">
-								</div>
+
 							</div>
 						</div>
 					</div>
 				`));
 			break;
 			case 'admin':
-				_messageListEl.append(jQuery(`
+				_messageListEl.prepend(jQuery(`
 					<div class="card">
 						<div class="card-body" >
 							<h6 class="card-title admin-header">
