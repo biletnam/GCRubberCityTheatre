@@ -17,3 +17,6 @@
 	flex-shrink:0;
 	background-image: url('http://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/logonew_1.png?1497646754')
 }
+.messagesList {
+	margin-bottom:5em;
+}

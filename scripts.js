@@ -7,12 +7,21 @@ jQuery(function(){
 	//--controller
 	var showLoginView = function(){
 		_app.html(
-			'<form class="loginForm">'
+			'<nav class="navbar navbar-expand-lg navbar-light bg-light">'
+			+	'<a class="navbar-brand">Rubber City Theatre</a>'
+			+	'</nav>'
+			+	'<form class="loginForm" style="padding:10px">'
+				+ '<div class="form-group">'
 				+ '<label for="nameField">Name</label>'
-				+ '<input class="nameField" id="nameField" name="name" />'
+				+ '<input type="text" class="nameField form-control" id="nameField" name="name" />'
+				+ '</div>'
+				+ '<div class="form-group">'
 				+ '<label for="passwordField">Password</label>'
-				+ '<input class="passwordField" id="passwordField" name="password" type="password" />'
-				+ '<button>Log In</button>'
+				+ '<input class="passwordField form-control" id="passwordField" name="password" type="password" />'
+				+ '</div>'
+				+ '<div>'
+				+ '<button class="btn btn-default">Log In</button>'
+				+ '</div>'
 			+ '</form>'
 		);
 		var _loginForm = _app.find('.loginForm');

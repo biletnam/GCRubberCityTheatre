@@ -34,7 +34,12 @@ jQuery(function(){
 		_currentMessages = undefined;
 		_setMainContent(
 			'<form class="loginForm">'
-				+ '<input class="passwordField" name="password" autocomplete="off" autofocus="autofocus" type="password" /><button>Log In</button>'
+				+ '<div class="input-group">'
+					+ '<input class="passwordField form-control" name="password" autocomplete="off" autofocus="autofocus" type="password" />'
+					+ '<div class="input-group-append">'
+						+ '<button class="btn btn-outline-secondary">Log In</button>'
+					+ '</div>'
+				+ '</div>'
 			+ '</form>'
 		);
 		var _loginForm = _app.find('.loginForm');
