@@ -7,12 +7,19 @@ jQuery(function(){
 	var showLoginView = function(){
 		_app.html(
 			'<form class="loginForm">'
-				+ '<input class="passwordField" name="password" autocomplete="off" autofocus="autofocus" type="password" /><button>Log In</button>'
+				+ '<label for="nameField">Name</label>'
+				+ '<input class="nameField" id="nameField" name="name" />'
+				+ '<label for="passwordField">Password</label>'
+				+ '<input class="passwordField" id="passwordField" name="password" type="password" />'
+				+ '<button>Log In</button>'
 			+ '</form>'
 		);
 		var _loginForm = _app.find('.loginForm');
 		_loginForm.on('submit', function(){
-			_socket.emit('userLogin', _loginForm.find('.passwordField').val());
+			_socket.emit('userLogin', {
+				'name': _loginForm.find('.nameField').val()
+				,password: _loginForm.find('.passwordField').val()
+			});
 			return false;
 		});
 	};

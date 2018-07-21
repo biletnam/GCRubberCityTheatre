@@ -16,7 +16,9 @@ var _userPassword = process.env['USER_PASSWORD'] || '1234';
 //--sockets
 _io.on('connection', function(_socket){
 	var _loginType;
+	var _userName;
 	console.log('connection');
+	//---login
 	_socket.on('adminLogin', function(_password){
 		console.log('adminLogin event');
 		if(_password === _adminPassword){
@@ -31,9 +33,10 @@ _io.on('connection', function(_socket){
 			});
 		}
 	});
-	_socket.on('userLogin', function(_password){
+	_socket.on('userLogin', function(_data){
 		console.log('userLogin event');
-		if(_userPassword && _password === _userPassword){
+		if(_userPassword && _data.name && _data.password === _userPassword){
+			_userName = _data.name;
 			_socket.emit('userLoggedIn');
 			_loginType = 'user';
 			_approvedMessages.forEach(function(_message){
@@ -41,11 +44,23 @@ _io.on('connection', function(_socket){
 			});
 		}
 	});
+	//---messages
 	_socket.on('message', function(_messageValue){
 		console.log('message event: ' + _messageValue);
 		if(_messageValue){
+			var _now = new Date();
+			var _time = _now.getHours();
+			var _amPm = (_time >= 12 ? 'PM' : 'AM');
+			if(_time > 12){
+				_time = _time - 12;
+			}
+			_time += ':' + _now.getMinutes() + ' ' + _amPm;
+			console.log('time: ' + _time);
 			var _message = {
-				type: _loginType
+				name: _userName
+				,time: _time
+				,dateTime: _now
+				,type: _loginType
 				,value: _messageValue
 			};
 			if(_loginType === 'admin'){
@@ -64,6 +79,12 @@ _io.on('connection', function(_socket){
 					_adminUser.emit('message', _message);
 				});
 			}
+		}
+	});
+	//---settings
+	_socket.on('setSettings', function(_newSettings){
+		if(_loginType === 'admin'){
+			_userPassword = _newSettings.pin;
 		}
 	});
 });
