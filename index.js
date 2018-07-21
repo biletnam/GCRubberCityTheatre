@@ -45,8 +45,18 @@ _io.on('connection', function(_socket){
 	_socket.on('message', function(_messageValue){
 		console.log('message event: ' + _messageValue);
 		if(_messageValue){
+			var _now = new Date();
+			var _time = _now.getHours();
+			var _amPm = (_time >= 12 ? 'PM' : 'AM');
+			if(_time > 12){
+				_time = _time - 12;
+			}
+			_time += ':' + _now.getMinutes() + ' ' + _amPm;
+			console.log('time: ' + _time);
 			var _message = {
 				name: _userName
+				,time: _time
+				,dateTime: _now
 				,type: _loginType
 				,value: _messageValue
 			};
