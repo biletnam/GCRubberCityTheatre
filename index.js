@@ -60,7 +60,11 @@ _io.on('connection', function(_socket){
 			if(_time > 12){
 				_time = _time - 12;
 			}
-			_time += ':' + _now.getMinutes() + ' ' + _amPm;
+			var _minutes = _now.getMinutes();
+			if(_minutes < 9){
+				_minutes = '0' + _minutes;
+			}
+			_time += ':' + _minutes + ' ' + _amPm;
 			console.log('time: ' + _time);
 			var _message = {
 				name: _messageValue.sender
