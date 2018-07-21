@@ -3,9 +3,11 @@ jQuery(function(){
 	var _app = jQuery('.app');
 	var _currentView;
 
-	var _adminUserNames = jQuery('[data-admin-names]').data('adminNames').split('|');
 	var _currentMessages;
 	var _loggedIn = false;
+	var _settings = {
+		adminNames: jQuery('[data-admin-names]').data('adminNames').split('|')
+	};
 
 	_app.html(
 		'<header class="appHeader"><nav>'
@@ -40,7 +42,7 @@ jQuery(function(){
 	};
 	var showMessageView = function(){
 		console.log('_currentMessages', _currentMessages);
-		var _nameOptions = _adminUserNames.map(function(name) { return `<option>${name}</option>`; });
+		var _nameOptions = _settings.adminNames.map(function(name) { return `<option>${name}</option>`; });
 		_setMainContent(`
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<a class="navbar-brand">Rubber City Theatre</a>
@@ -81,9 +83,9 @@ jQuery(function(){
 		_setMainContent(
 			'<form class="settingsForm">'
 				+ '<label for="pinField">Pin</label>'
-				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" />'
+				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
 				+ '<label for="adminNamesField">Names</label>'
-				+ '<input class="adminNamesField" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" />'
+				+ '<input class="adminNamesField" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.adminNames ? _settings.adminNames.join(', ') : null) + '" />'
 				+ '<button>Save</button>'
 			+ '</form>'
 		);
@@ -177,10 +179,9 @@ jQuery(function(){
 		_loggedIn = false;
 		showLoginView();
 	});
-	_socket.on('setSettings', function(_settings){
-		if(_settings.adminNames){
-			_adminUserNames = _settings.adminNames;
-
+	_socket.on('setSettings', function(_newSettings){
+		_settings = _newSettings;
+		if(_newSettings.adminNames){
 			//--rerender message view because name dropdown may have changed
 			if(_currentView === 'messages'){
 				showMessageView();
