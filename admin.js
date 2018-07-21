@@ -77,7 +77,8 @@ jQuery(function(){
 	var showSettingsView = function(){
 		_setMainContent(
 			'<form class="settingsForm">'
-				+ '<input class="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" />'
+				+ '<label for="pinField">Pin</label>'
+				+ '<input class="pinField" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" />'
 				+ '<button>Save</button>'
 			+ '</form>'
 		);
