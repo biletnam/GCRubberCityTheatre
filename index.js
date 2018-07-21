@@ -6,9 +6,9 @@ var _io = require('socket.io')(_http);
 var _approvedMessages = [];
 var _users = [];
 var _userMessages = [];
-var _adminPassword = '123456';
+var _adminPassword = process.env['ADMIN_PASSWORD']
 var _adminUsers = [];
-var _userPassword = '1234';
+var _userPassword = process.env['USER_PASSWORD'];
 
 //--sockets
 _io.on('connection', function(_socket){

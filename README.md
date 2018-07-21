@@ -5,11 +5,17 @@
 Run `npm install` to install the project's dependencies. You can start
 the application locally by running `npm start`.
 
-Users will login at [http://localhost:8021] with the password `1234`.
+Users will login at [http://localhost:8021] with the password specified
+at deployment.
 
-Admins will login at [http://localhost:8021/admin] with the password `123456`.
+Admins will login at [http://localhost:8021/admin] with the password
+specified at deployment.
 
 ## Deployment
 
-You can deploy this to [now]() by running `npx now` from a recent
-version of node.
+You can deploy this to [now](https://zeit.co/) by running:
+
+`npx now -e ADMIN_PASSWORD="123456" -e USER_PASSWORD="1234"`
+
+You can change the passwords by altering the command that you use to deploy
+the application.
