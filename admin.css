@@ -1,36 +1,19 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body, html{ margin: 0; padding: 0; }
-.app{
-	display: grid;
-	grid-template-areas: 'header' 'main';
-	grid-template-rows: min-content auto;
-	height: 100%;
-	position: fixed;
-	width: 100%;
+.user {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
 }
-.appHeader{
-	grid-area: header;
+.user-header {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
 }
-.appMain{
-	display: grid;
-	grid-area: main;
-	grid-template-areas: 'messages' 'form';
-	grid-template-rows: auto min-content;
-}
-.messageForm { background: #000; grid-area: form; padding: 3px; }
-.messageForm input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-.messageForm button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-.messagesList{
-	grid-area: messages;
-	list-style-type: none;
-	margin: 0;
-	overflow: auto;
-	padding: 0;
-}
-.messagesList li {
-	background: #eeeeee; background: #eeeeeeaa;
-	padding: 5px 10px;
-}
-.messagesList li[data-type="admin"]{
-	background: #aaeeaa; background: #aaeeaaaa;
+.profile-pic {
+	flex-shrink:0;
+	background-image: url('http://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/logonew_1.png?1497646754')
 }
