@@ -1,6 +1,9 @@
 {
   "name": "RubberCityTheaterChat",
   "version": "0.0.0",
+  "scripts": {
+    "start": "node index"
+  },
   "dependencies": {
     "express": "^4.16.3",
     "jquery": "^3.3.1",
