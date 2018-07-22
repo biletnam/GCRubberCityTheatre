@@ -14,8 +14,9 @@ var _users = [];
 var _userMessages = [];
 var _adminUsers = [];
 var _sanitizeOpts = {
-	allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
-	allowedAttributes: {
+	allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a',
+	 'b', 'i', 'strong', 'em', 'caption'  ],
+		allowedAttributes: {
 		img: [ 'src' ]
 	},
 allowedSchemes: [ 'http', 'https' ],
