@@ -13,7 +13,7 @@ jQuery(function(){
 
 	_app.html(
 		'<header class="appHeader">'
-			+ '<nav class="navbar navbar-expand-lg navbar-light bg-light">'
+			+ '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">'
 			+ '<a class="navbar-brand">' + _headerName + ' - Admin</a>'
 			+ '<ul class="navbar-nav">'
 			+ '<li class="nav-item"><a class="settingsNavAction nav-link">Settings</a></li>'
@@ -164,7 +164,7 @@ jQuery(function(){
 		switch(_message.type){
 			case 'user':
 				_messageListEl.prepend(jQuery(`
-					<div class="card">
+					<div class="card bg-dark">
 						<div class="card-body">
 							<h6 class="card-title user-header">
 								${_message.name} <span style="font-size:.8em; margin-left:8px; margin-right:8px;">posted at</span> ${_message.time}
@@ -181,7 +181,7 @@ jQuery(function(){
 			break;
 			case 'admin':
 				_messageListEl.prepend(jQuery(`
-						<div class="card">
+						<div class="card bg-dark">
 							<div class="card-body" >
 								<h6 class="card-title admin-header">
 									${_message.name} <span style="font-size:.7em;"> posted at </span> ${_message.time}

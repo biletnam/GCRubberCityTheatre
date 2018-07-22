@@ -1,7 +1,9 @@
 body{
 	background-color: transparent;
+	color: white;
 }
 html{
+	background-color: black;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;

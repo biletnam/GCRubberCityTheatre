@@ -192,6 +192,9 @@ _app.get('/admin.css', function(_request, _response){
 _app.get('/admin.js', function(_request, _response){
 	_response.sendFile(__dirname + '/admin.js');
 });
+_app.get('/login-image.jpg', function(_request, _response){
+	_response.sendFile(__dirname + '/images/login-image.jpg');
+});
 _app.get('/jquery.js', function(_request, _response){
 	_response.sendFile(__dirname + '/node_modules/jquery/dist/jquery.js');
 });
