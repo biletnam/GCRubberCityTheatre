@@ -17,6 +17,7 @@ html{
 .card{
 	word-break: break-word;
 	word-break: break-all;
+	hyphens: auto;
 }
 .user {
 	display: inline-block;
