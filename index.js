@@ -73,6 +73,13 @@ _io.on('connection', function(_socket){
 		}
 	});
 	//---messages
+  _socket.on('clearMessages', function(){
+    if(_loginType === 'admin'){
+      _approvedMessages = [];
+      _userMessages = [];
+      _io.emit('clearMessages');
+    }
+  });
 	_socket.on('message', function(_messageValue){
 		console.log('message event: ' + _messageValue);
 		if(_messageValue.message && _messageValue.message.trim()){
