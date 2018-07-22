@@ -5,6 +5,8 @@ jQuery(function(){
 
 	var _currentMessages;
 	var _loggedIn = false;
+	var _backgroundImage = _app.data('backgroundImage') || false;
+	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
 	var _settings = {
 		adminNames: jQuery('[data-admin-names]').data('adminNames').split(',')
 	};
@@ -12,7 +14,7 @@ jQuery(function(){
 	_app.html(
 		'<header class="appHeader">'
 			+ '<nav class="navbar navbar-expand-lg navbar-light bg-light">'
-			+ '<a class="navbar-brand">Rubber City Theatre - Admin</a>'
+			+ '<a class="navbar-brand">' + _headerName + ' - Admin</a>'
 			+ '<ul class="navbar-nav">'
 			+ '<li class="nav-item"><a class="settingsNavAction nav-link">Settings</a></li>'
 			+ '<li class="nav-item"><a class="messagesNavAction nav-link">Messages</a></li>'
@@ -66,7 +68,7 @@ jQuery(function(){
 				<div class="input-group">
 					<input type="text" class="form-control messageField" name="message" autocomplete="off" autofocus="autofocus" required="required" placeholder="Enter Message" aria-label="Enter message..." aria-describedby="button-addon2">
 					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
+						<button class="btn btn-primary btn-outline-secondary" type="submit" id="button-addon2">Send</button>
 					</div>
 				</div>
 			</form>`
@@ -116,6 +118,10 @@ jQuery(function(){
 
 	//--routing
 	showLoginView();
+	if(_backgroundImage){
+		jQuery('html').css('background-image', 'url("' + _backgroundImage + '")');
+	}
+
 	//---buttons
 	_app.find('.messagesNavAction').on('click', function(){
 		if(_loggedIn){
