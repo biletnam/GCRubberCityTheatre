@@ -72,8 +72,10 @@ _io.on('connection', function(_socket){
 		console.log('userLogin event');
 		if(!_data.name){
 			_socket.emit('formError', {message: 'Name must be set.'});
+		} else if (_data.name.length()>50){
+			_socket.emit('formError', {message: 'Name must be less than 50 cahracters'});
 		}else if(_userPassword && _data.password === _userPassword){
-			_userName = _data.name;
+			_userName = sanitizeHtml(_data.name);
 			_socket.emit('userLoggedIn');
 			_loginType = 'user';
 			_approvedMessages.forEach(function(_message){
