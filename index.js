@@ -163,6 +163,9 @@ _app.get('/', function(_request, _response){
 	if(_config['header name']){
 		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['header name']}"`);
 	}
+	if(_config['background image']){
+		output = output.replace(/data-background-image="([^"]*)"/, `data-background-image="${_config['background image']}"`);
+	}
 	if(_config['login image']){
 		output = output.replace(/data-login-image="([^"]*)"/, `data-login-image="${_config['login image']}"`);
 	}
@@ -172,6 +175,9 @@ _app.get('/admin', function(_request, _response){
 	var output = _fs.readFileSync(__dirname + '/admin.html').toString()
 		.replace('ADMIN_NAMES', _adminUserNames.join(','))
 	;
+	if(_config['background image']){
+		output = output.replace(/data-background-image="([^"]*)"/, `data-background-image="${_config['background image']}"`);
+	}
 	if(_config['header name']){
 		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['header name']}"`);
 	}

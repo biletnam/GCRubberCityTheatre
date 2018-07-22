@@ -5,6 +5,7 @@ jQuery(function(){
 
 	var _currentMessages;
 	var _loggedIn = false;
+	var _backgroundImage = _app.data('backgroundImage') || false;
 	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
 	var _settings = {
 		adminNames: jQuery('[data-admin-names]').data('adminNames').split(',')
@@ -117,6 +118,10 @@ jQuery(function(){
 
 	//--routing
 	showLoginView();
+	if(_backgroundImage){
+		jQuery('html').css('background-image', 'url("' + _backgroundImage + '")');
+	}
+
 	//---buttons
 	_app.find('.messagesNavAction').on('click', function(){
 		if(_loggedIn){

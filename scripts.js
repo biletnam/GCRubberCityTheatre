@@ -3,6 +3,7 @@ jQuery(function(){
 	var _app = jQuery('.app');
 	var _messageListEl;
 	var _userName;
+	var _backgroundImage = _app.data('backgroundImage') || false;
 	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
 	var _loginImage = _app.data('loginImage') || 'https://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/rcttext_1.png';
 
@@ -68,6 +69,9 @@ jQuery(function(){
 	}
 
 	//--routing
+	if(_backgroundImage){
+		jQuery('html').css('background-image', 'url("' + _backgroundImage + '")');
+	}
 	showLoginView();
 	_socket.on('clearMessages', function(){
 		if(_messageListEl){
