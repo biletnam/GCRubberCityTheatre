@@ -5,6 +5,7 @@ jQuery(function(){
 
 	var _currentMessages;
 	var _loggedIn = false;
+	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
 	var _settings = {
 		adminNames: jQuery('[data-admin-names]').data('adminNames').split(',')
 	};
@@ -12,7 +13,7 @@ jQuery(function(){
 	_app.html(
 		'<header class="appHeader">'
 			+ '<nav class="navbar navbar-expand-lg navbar-light bg-light">'
-			+ '<a class="navbar-brand">Rubber City Theatre - Admin</a>'
+			+ '<a class="navbar-brand">' + _headerName + ' - Admin</a>'
 			+ '<ul class="navbar-nav">'
 			+ '<li class="nav-item"><a class="settingsNavAction nav-link">Settings</a></li>'
 			+ '<li class="nav-item"><a class="messagesNavAction nav-link">Messages</a></li>'

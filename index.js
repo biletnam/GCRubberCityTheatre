@@ -157,10 +157,19 @@ _http.listen(8021, function(){
 
 //--routing
 _app.get('/', function(_request, _response){
-	_response.sendFile(__dirname + '/index.html');
+	var output = _fs.readFileSync(__dirname + '/index.html').toString();
+	if(_config['heading name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	}
+	_response.send(output);
 });
 _app.get('/admin', function(_request, _response){
-	const output = _fs.readFileSync(__dirname + '/admin.html').toString().replace('ADMIN_NAMES', _adminUserNames.join(','));
+	var output = _fs.readFileSync(__dirname + '/admin.html').toString()
+		.replace('ADMIN_NAMES', _adminUserNames.join(','))
+	;
+	if(_config['heading name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	}
 	_response.send(output);
 });
 //---assets

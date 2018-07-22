@@ -3,6 +3,7 @@ jQuery(function(){
 	var _app = jQuery('.app');
 	var _messageListEl;
 	var _userName;
+	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
 
 	//--controller
 	var showLoginView = function(){
@@ -37,7 +38,7 @@ jQuery(function(){
 	var showMessageView = function(){
 		_app.html(`
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand">Rubber City Theatre</a>
+				<a class="navbar-brand">${_headerName}</a>
 			</nav>
 			<div class="messagesList"></div>
 			<form class="messageForm fixed-bottom">
