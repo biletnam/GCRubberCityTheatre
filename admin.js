@@ -186,7 +186,7 @@ jQuery(function(){
 									${_message.name} <span style="font-size:.7em;"> posted at </span> ${_message.time}
 								</h6>
 								<div style="display: flex; flex-direction: row; align-items:center; width:100%">
-									<div class="user profile-pic">
+									<div class="user profile-pic" style="background-image: url(${_message.image})">
 									</div>
 									<div>
 										${_message.value}
