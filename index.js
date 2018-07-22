@@ -5,21 +5,20 @@ var _io = require('socket.io')(_http);
 var sanitizeHtml = require('sanitize-html');
 var fs = require('fs'),
 	readline = require('readline');
-	
-	clean = sanitizeHtml(dirty, {
-		allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
-		allowedAttributes: {
-			img: [ 'src' ]
-		  },
-	  });
+
 
 //--data
-
 var _adminUserNames = process.env['ADMIN_NAMES'] || 'Admin|Other Person'.split('|');
 var _approvedMessages = [];
 var _users = [];
 var _userMessages = [];
 var _adminUsers = [];
+var _sanitizeOpts = {
+	allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
+	allowedAttributes: {
+		img: [ 'src' ]
+	}
+};
 var _userPassword = process.env['USER_PASSWORD'];
 var _config={};
 
@@ -41,29 +40,6 @@ lines.forEach(function(line){
 			_adminUserNames=_holder[1].split(",").map(function(_name){ return _name.trim()});
 		break;
 	};
-    readline = require('readline');
-
-//--data
-
-var _adminUserNamesString = process.env['ADMIN_NAMES'] || 'Admin|Other Person';
-var _adminUserNames = _adminUserNamesString.split('|');
-var _approvedMessages = [];
-var _users = [];
-var _userMessages = [];
-//var _adminPassword = process.env['ADMIN_PASSWORD'] || '123456';
-var _adminUsers = [];
-var _userPassword = process.env['USER_PASSWORD'] || '1234';
-
-var rd = readline.createInterface({
-    input: fs.createReadStream(__dirname+'/app.setup'),
-    output: process.stdout,
-    console: false
-});
-rd.on('line', function(line) {
-	var holder = line.split(":");
-	if (holder[0].toLowerCase()=="password") {
-		_adminPassword = holder[1]; 
-	}
 });
 
 //--sockets
@@ -131,7 +107,7 @@ _io.on('connection', function(_socket){
 				,time: _time
 				,dateTime: _now
 				,type: _loginType
-				,value: sanitizeHtml(_messageValue.message)
+				,value: sanitizeHtml(_messageValue.message, _sanitizeOpts)
 			};
 			if(_config[_messageValue.sender + ".image"]){
 				_message.image = _config[_messageValue.sender+".image"];
