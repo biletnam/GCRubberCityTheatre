@@ -24,7 +24,9 @@ allowedSchemesAppliedToAttributes: [ 'href', 'src', 'cite' ],
 allowProtocolRelative: true,
 };
 var _userPassword = process.env['USER_PASSWORD'];
-var _config={};
+var _config = {
+	'max message length': 5000
+};
 
 var lines = require('fs').readFileSync(__dirname+"/app.setup", 'utf-8')
 	.split('\n')
@@ -111,7 +113,7 @@ _io.on('connection', function(_socket){
 				,time: _time
 				,dateTime: _now
 				,type: _loginType
-				,value: sanitizeHtml(_messageValue.message, _sanitizeOpts)
+				,value: sanitizeHtml(_messageValue.message.substring(0, _config['max message length'] || 5000), _sanitizeOpts)
 			};
 			if(_config[_messageValue.sender + ".image"]){
 				_message.image = _config[_messageValue.sender+".image"];
