@@ -13,7 +13,7 @@ var _approvedMessages = [];
 var _users = [];
 var _userMessages = [];
 var _adminUsers = [];
-var _userPassword = process.env['USER_PASSWORD'] || '1234';
+var _userPassword = process.env['USER_PASSWORD'];
 var _config={};
 
 var lines = require('fs').readFileSync(__dirname+"/app.setup", 'utf-8')
@@ -27,7 +27,9 @@ lines.forEach(function(line){
 		case "password":
 			_adminPassword = _holder[1];
 		break;
-
+    case "user password":
+      _userPassword = _holder[1];
+    break;
 		case "admin names":
 			_adminUserNames=_holder[1].split(",").map(function(_name){ return _name.trim()});
 		break;
