@@ -34,14 +34,16 @@ jQuery(function(){
 	var showLoginView = function(){
 		_currentMessages = undefined;
 		_setMainContent(
-			'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
+
+			'<button class="btn" type="submit" id="button-addon2">Send</button>'
+			+'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
 				+ '<div class="form-group">'
 					+ '<label for="password">Admin Password</label>'
 					+ '<div class="input-group">'
 
 						+ '<input class="passwordField form-control" name="password" autocomplete="off" autofocus="autofocus" type="password" />'
 						+ '<div class="input-group-append">'
-							+ '<button>Log In</button>'
+							+ '<button class="btn">Log In</button>'
 						+ '</div>'
 					+ '</div>'
 				+ '</div>'
@@ -67,7 +69,7 @@ jQuery(function(){
 				<div class="input-group">
 					<input type="text" class="form-control messageField" name="message" autocomplete="off" autofocus="autofocus" required="required" placeholder="Enter Message" aria-label="Enter message..." aria-describedby="button-addon2">
 					<div class="input-group-append">
-						<button class="btn btn-primary btn-outline-secondary" type="submit" id="button-addon2">Send</button>
+						<button class="btn" type="submit" id="button-addon2">Send</button>
 					</div>
 				</div>
 			</form>`
