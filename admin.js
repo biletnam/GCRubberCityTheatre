@@ -5,6 +5,7 @@ jQuery(function(){
 
 	var _currentMessages;
 	var _loggedIn = false;
+	var _backgroundImage = _app.data('backgroundImage') || false;
 	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
 	var _settings = {
 		adminNames: jQuery('[data-admin-names]').data('adminNames').split(',')
@@ -12,7 +13,7 @@ jQuery(function(){
 
 	_app.html(
 		'<header class="appHeader">'
-			+ '<nav class="navbar navbar-expand-lg navbar-light bg-light">'
+			+ '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">'
 			+ '<a class="navbar-brand">' + _headerName + ' - Admin</a>'
 			+ '<ul class="navbar-nav">'
 			+ '<li class="nav-item"><a class="settingsNavAction nav-link">Settings</a></li>'
@@ -34,9 +35,7 @@ jQuery(function(){
 	var showLoginView = function(){
 		_currentMessages = undefined;
 		_setMainContent(
-
-			'<button class="btn" type="submit" id="button-addon2">Send</button>'
-			+'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
+			'<form class="loginForm" style="margin:10px 0;">'
 				+ '<div class="form-group">'
 					+ '<label for="password">Admin Password</label>'
 					+ '<div class="input-group">'
@@ -95,7 +94,7 @@ jQuery(function(){
 	};
 	var showSettingsView = function(){
 		_setMainContent(
-			'<form class="settingsForm" style="max-width:600px; margin:auto; padding:10px">'
+			'<form class="settingsForm" style="margin: 10px 0">'
 				+ '<div class="form-group">'
 				+ '<label for="pinField">Pin</label>'
 				+ '<input class="pinField form-control" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
@@ -119,6 +118,10 @@ jQuery(function(){
 
 	//--routing
 	showLoginView();
+	if(_backgroundImage){
+		jQuery('html').css('background-image', 'url("' + _backgroundImage + '")');
+	}
+
 	//---buttons
 	_app.find('.messagesNavAction').on('click', function(){
 		if(_loggedIn){
@@ -161,7 +164,7 @@ jQuery(function(){
 		switch(_message.type){
 			case 'user':
 				_messageListEl.prepend(jQuery(`
-					<div class="card">
+					<div class="card bg-dark">
 						<div class="card-body">
 							<h6 class="card-title user-header">
 								${_message.name} <span style="font-size:.8em; margin-left:8px; margin-right:8px;">posted at</span> ${_message.time}
@@ -178,7 +181,7 @@ jQuery(function(){
 			break;
 			case 'admin':
 				_messageListEl.prepend(jQuery(`
-						<div class="card">
+						<div class="card bg-dark">
 							<div class="card-body" >
 								<h6 class="card-title admin-header">
 									${_message.name} <span style="font-size:.7em;"> posted at </span> ${_message.time}

@@ -3,8 +3,9 @@ jQuery(function(){
 	var _app = jQuery('.app');
 	var _messageListEl;
 	var _userName;
+	var _backgroundImage = _app.data('backgroundImage') || false;
 	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
-	var _loginImage = _app.data('loginImage') || 'https://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/rcttext_1.png';
+	var _loginImage = _app.data('loginImage') || '/login-image.jpg';
 
 	//--controller
 	var showLoginView = function(){
@@ -12,13 +13,13 @@ jQuery(function(){
 			'<div >'
 			+	'<img style="display: block; margin-left: auto;	margin-right: auto; margin-top: 50px; width: 50%;" src="' + _loginImage + '">'
 			+	'</div>'
-			+	'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
+			+	'<form class="loginForm" style="margin:10px 0">'
 				+ '<div class="form-group">'
 				+ '<label for="nameField">Name</label>'
 				+ '<input type="text" class="nameField form-control" id="nameField" name="name" />'
 				+ '</div>'
 				+ '<div class="form-group">'
-				+ '<label for="passwordField">Pin</label>'
+				+ '<label for="passwordField">Audience Pin</label>'
 				+ '<input class="passwordField form-control" id="passwordField" name="password" type="text" />'
 				+ '</div>'
 				+ '<div>'
@@ -38,7 +39,7 @@ jQuery(function(){
 	};
 	var showMessageView = function(){
 		_app.html(`
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 				<a class="navbar-brand">${_headerName}</a>
 			</nav>
 			<div class="messagesList"></div>
@@ -68,6 +69,9 @@ jQuery(function(){
 	}
 
 	//--routing
+	if(_backgroundImage){
+		jQuery('html').css('background-image', 'url("' + _backgroundImage + '")');
+	}
 	showLoginView();
 	_socket.on('clearMessages', function(){
 		if(_messageListEl){
@@ -82,7 +86,7 @@ jQuery(function(){
 		switch(_message.type){
 			case 'user':
 				_messageListEl.prepend(jQuery(`
-					<div class="card">
+					<div class="card bg-dark">
 						<div class="card-body">
 							<h6 class="card-title user-header">
 								${_message.name} <span style="font-size:.8em; margin-left:8px; margin-right:8px;">posted at</span> ${_message.time}
@@ -100,7 +104,7 @@ jQuery(function(){
 			break;
 			case 'admin':
 				_messageListEl.prepend(jQuery(`
-					<div class="card">
+					<div class="card bg-dark">
 						<div class="card-body" >
 							<h6 class="card-title admin-header">
 								${_message.name} <span style="font-size:.7em;"> posted at </span> ${_message.time}

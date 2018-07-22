@@ -15,7 +15,7 @@ var _userMessages = [];
 var _adminUsers = [];
 var _sanitizeOpts = {
 	allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a',
-	 'b', 'i', 'strong', 'em', 'caption'  ],
+	 'b', 'i', 'strong', 'em', 'caption', 'img'  ],
 		allowedAttributes: {
 		img: [ 'src' ]
 	},
@@ -74,8 +74,10 @@ _io.on('connection', function(_socket){
 		console.log('userLogin event');
 		if(!_data.name.trim()){
 			_socket.emit('formError', {message: 'Name must be set.'});
+		} else if (_data.name.length >50){
+			_socket.emit('formError', {message: 'Name must be less than 50 cahracters'});
 		}else if(_userPassword && _data.password === _userPassword){
-			_userName = _data.name;
+			_userName = sanitizeHtml(_data.name);
 			_socket.emit('userLoggedIn');
 			_loginType = 'user';
 			_approvedMessages.forEach(function(_message){
@@ -160,8 +162,11 @@ _http.listen(8021, function(){
 //--routing
 _app.get('/', function(_request, _response){
 	var output = _fs.readFileSync(__dirname + '/index.html').toString();
-	if(_config['heading name']){
-		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	if(_config['header name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['header name']}"`);
+	}
+	if(_config['background image']){
+		output = output.replace(/data-background-image="([^"]*)"/, `data-background-image="${_config['background image']}"`);
 	}
 	if(_config['login image']){
 		output = output.replace(/data-login-image="([^"]*)"/, `data-login-image="${_config['login image']}"`);
@@ -172,8 +177,11 @@ _app.get('/admin', function(_request, _response){
 	var output = _fs.readFileSync(__dirname + '/admin.html').toString()
 		.replace('ADMIN_NAMES', _adminUserNames.join(','))
 	;
-	if(_config['heading name']){
-		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	if(_config['background image']){
+		output = output.replace(/data-background-image="([^"]*)"/, `data-background-image="${_config['background image']}"`);
+	}
+	if(_config['header name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['header name']}"`);
 	}
 	_response.send(output);
 });
@@ -183,6 +191,9 @@ _app.get('/admin.css', function(_request, _response){
 });
 _app.get('/admin.js', function(_request, _response){
 	_response.sendFile(__dirname + '/admin.js');
+});
+_app.get('/login-image.jpg', function(_request, _response){
+	_response.sendFile(__dirname + '/images/login-image.jpg');
 });
 _app.get('/jquery.js', function(_request, _response){
 	_response.sendFile(__dirname + '/node_modules/jquery/dist/jquery.js');
