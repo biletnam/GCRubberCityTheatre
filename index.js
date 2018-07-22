@@ -17,7 +17,10 @@ var _sanitizeOpts = {
 	allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
 	allowedAttributes: {
 		img: [ 'src' ]
-	}
+	},
+allowedSchemes: [ 'http', 'https' ],
+allowedSchemesAppliedToAttributes: [ 'href', 'src', 'cite' ],
+allowProtocolRelative: true,
 };
 var _userPassword = process.env['USER_PASSWORD'];
 var _config={};
