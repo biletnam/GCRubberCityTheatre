@@ -160,8 +160,8 @@ _http.listen(8021, function(){
 //--routing
 _app.get('/', function(_request, _response){
 	var output = _fs.readFileSync(__dirname + '/index.html').toString();
-	if(_config['heading name']){
-		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	if(_config['header name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['header name']}"`);
 	}
 	if(_config['login image']){
 		output = output.replace(/data-login-image="([^"]*)"/, `data-login-image="${_config['login image']}"`);
@@ -172,8 +172,8 @@ _app.get('/admin', function(_request, _response){
 	var output = _fs.readFileSync(__dirname + '/admin.html').toString()
 		.replace('ADMIN_NAMES', _adminUserNames.join(','))
 	;
-	if(_config['heading name']){
-		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	if(_config['header name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['header name']}"`);
 	}
 	_response.send(output);
 });
