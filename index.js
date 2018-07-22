@@ -72,7 +72,7 @@ _io.on('connection', function(_socket){
 	});
 	_socket.on('userLogin', function(_data){
 		console.log('userLogin event');
-		if(!_data.name){
+		if(!_data.name.trim()){
 			_socket.emit('formError', {message: 'Name must be set.'});
 		}else if(_userPassword && _data.password === _userPassword){
 			_userName = _data.name;
