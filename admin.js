@@ -35,7 +35,7 @@ jQuery(function(){
 	var showLoginView = function(){
 		_currentMessages = undefined;
 		_setMainContent(
-			'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
+			'<form class="loginForm" style="margin:10px 0;">'
 				+ '<div class="form-group">'
 					+ '<label for="password">Admin Password</label>'
 					+ '<div class="input-group">'
@@ -94,7 +94,7 @@ jQuery(function(){
 	};
 	var showSettingsView = function(){
 		_setMainContent(
-			'<form class="settingsForm" style="max-width:600px; margin:auto; padding:10px">'
+			'<form class="settingsForm" style="margin: 10px 0">'
 				+ '<div class="form-group">'
 				+ '<label for="pinField">Pin</label>'
 				+ '<input class="pinField form-control" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'

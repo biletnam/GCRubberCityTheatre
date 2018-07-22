@@ -13,7 +13,7 @@ jQuery(function(){
 			'<div >'
 			+	'<img style="display: block; margin-left: auto;	margin-right: auto; margin-top: 50px; width: 50%;" src="' + _loginImage + '">'
 			+	'</div>'
-			+	'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
+			+	'<form class="loginForm" style="margin:10px 0">'
 				+ '<div class="form-group">'
 				+ '<label for="nameField">Name</label>'
 				+ '<input type="text" class="nameField form-control" id="nameField" name="name" />'

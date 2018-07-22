@@ -7,6 +7,11 @@ html{
 	background-size: cover;
 	min-height: 100vh;
 }
+.appMain{
+	margin: 0 auto;
+	max-width: 600px;
+	padding: 10px;
+}
 .user {
 	display: inline-block;
 	width: 50px;
