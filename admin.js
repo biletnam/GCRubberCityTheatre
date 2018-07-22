@@ -68,7 +68,7 @@ jQuery(function(){
 				<div class="input-group">
 					<input type="text" class="form-control messageField" name="message" autocomplete="off" autofocus="autofocus" required="required" placeholder="Enter Message" aria-label="Enter message..." aria-describedby="button-addon2">
 					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
+						<button class="btn btn-primary btn-outline-secondary" type="submit" id="button-addon2">Send</button>
 					</div>
 				</div>
 			</form>`
