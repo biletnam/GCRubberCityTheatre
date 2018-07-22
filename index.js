@@ -11,6 +11,7 @@ var fs = require('fs'),
 var _adminUserNames = process.env['ADMIN_NAMES'] || 'Admin|Other Person'.split('|');
 var _approvedMessages = [];
 var _users = [];
+var _messages = [];
 var _userMessages = [];
 var _adminUsers = [];
 var _sanitizeOpts = {
@@ -60,10 +61,7 @@ _io.on('connection', function(_socket){
 			_adminUsers.push(_socket);
 			_socket.emit('adminLoggedIn');
 			_loginType = 'admin';
-			_approvedMessages.forEach(function(_message){
-				_socket.emit('message', _message);
-			});
-			_userMessages.forEach(function(_message){
+			_messages.forEach(function(_message){
 				_socket.emit('message', _message);
 			});
 		}else{
@@ -126,11 +124,13 @@ _io.on('connection', function(_socket){
 				console.log('publicMessage received: ' + _messageValue);
 				if(_adminUsers.indexOf(_socket) !== -1){
 					console.log('publicMessage broadcast: ' + _messageValue);
+					_messages.push(_message);
 					_approvedMessages.push(_message);
 					_io.emit('message', _message);
 					console.log('admin message received');
 				}
 			}else if(_loginType === 'user'){
+				_messages.push(_message);
 				_userMessages.push(_message);
 				console.log('message received: ' + _message.value);
 				_socket.emit('message', _message);
