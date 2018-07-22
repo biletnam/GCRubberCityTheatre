@@ -17,7 +17,8 @@ var _sanitizeOpts = {
 	allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a',
 	 'b', 'i', 'strong', 'em', 'caption', 'img'  ],
 		allowedAttributes: {
-		img: [ 'src' ]
+		img: [ 'src' ],
+		a: ['href']
 	},
 allowedSchemes: [ 'http', 'https' ],
 allowedSchemesAppliedToAttributes: [ 'href', 'src', 'cite' ],
@@ -115,7 +116,9 @@ _io.on('connection', function(_socket){
 				,time: _time
 				,dateTime: _now
 				,type: _loginType
-				,value: sanitizeHtml(_messageValue.message.substring(0, _config['max message length'] || 5000), _sanitizeOpts)
+				,value: sanitizeHtml(_messageValue.message.length > _config['max message length'] 
+									? _messageValue.message.substring(0, _config['max message length'])+"..."
+									: _messageValue.message,_sanitizeOpts) 
 			};
 			if(_config[_messageValue.sender + ".image"]){
 				_message.image = _config[_messageValue.sender+".image"];
