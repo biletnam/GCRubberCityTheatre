@@ -4,7 +4,14 @@ var _http = require('http').Server(_app);
 var _io = require('socket.io')(_http);
 var sanitizeHtml = require('sanitize-html');
 var fs = require('fs'),
-    readline = require('readline');
+	readline = require('readline');
+	
+	clean = sanitizeHtml(dirty, {
+		allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
+		allowedAttributes: {
+			img: [ 'src' ]
+		  },
+	  });
 
 //--data
 
@@ -34,6 +41,29 @@ lines.forEach(function(line){
 			_adminUserNames=_holder[1].split(",").map(function(_name){ return _name.trim()});
 		break;
 	};
+    readline = require('readline');
+
+//--data
+
+var _adminUserNamesString = process.env['ADMIN_NAMES'] || 'Admin|Other Person';
+var _adminUserNames = _adminUserNamesString.split('|');
+var _approvedMessages = [];
+var _users = [];
+var _userMessages = [];
+//var _adminPassword = process.env['ADMIN_PASSWORD'] || '123456';
+var _adminUsers = [];
+var _userPassword = process.env['USER_PASSWORD'] || '1234';
+
+var rd = readline.createInterface({
+    input: fs.createReadStream(__dirname+'/app.setup'),
+    output: process.stdout,
+    console: false
+});
+rd.on('line', function(line) {
+	var holder = line.split(":");
+	if (holder[0].toLowerCase()=="password") {
+		_adminPassword = holder[1]; 
+	}
 });
 
 //--sockets
