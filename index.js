@@ -4,7 +4,14 @@ var _http = require('http').Server(_app);
 var _io = require('socket.io')(_http);
 var sanitizeHtml = require('sanitize-html');
 var fs = require('fs'),
-    readline = require('readline');
+	readline = require('readline');
+	
+	clean = sanitizeHtml(dirty, {
+		allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ]),
+		allowedAttributes: {
+			img: [ 'src' ]
+		  },
+	  });
 
 //--data
 
