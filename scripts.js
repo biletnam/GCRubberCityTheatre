@@ -19,7 +19,7 @@ jQuery(function(){
 				+ '<input type="text" class="nameField form-control" id="nameField" name="name" />'
 				+ '</div>'
 				+ '<div class="form-group">'
-				+ '<label for="passwordField">Pin</label>'
+				+ '<label for="passwordField">Audience Pin</label>'
 				+ '<input class="passwordField form-control" id="passwordField" name="password" type="text" />'
 				+ '</div>'
 				+ '<div>'
