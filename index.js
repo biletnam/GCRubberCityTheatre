@@ -70,7 +70,7 @@ _io.on('connection', function(_socket){
 				_socket.emit('message', _message);
 			});
 		}else{
-			_socket.emit('formError', {message: 'Invalid password.'});
+			_socket.emit('formError', {message: 'Invalid pin.'});
 		}
 	});
 	//---messages
