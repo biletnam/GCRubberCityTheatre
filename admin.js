@@ -97,10 +97,6 @@ jQuery(function(){
 				+ '<label for="pinField">Pin</label>'
 				+ '<input class="pinField form-control" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
 				+ '</div>'
-				+ '<div class="form-group">'
-				+ '<label for="adminNamesField">Names</label>'
-				+ '<input class="adminNamesField form-control" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.adminNames ? _settings.adminNames.join(', ') : null) + '" />'
-				+ '</div>'
 				+ '<button class="btn btn-default">Save</button>'
 			+ '</form>'
 			+ '<button class="clearMessages btn btn-default" type="button">Clear Messages</button>'
@@ -109,7 +105,6 @@ jQuery(function(){
 		_form.on('submit', function(){
 			_socket.emit('setSettings', {
 				'pin': _form.find('.pinField').val()
-				,'adminNames': _form.find('.adminNamesField').val()
 			});
 			return false;
 		});
