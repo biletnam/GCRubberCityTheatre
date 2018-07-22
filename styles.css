@@ -14,6 +14,10 @@ html{
 	max-width: 600px;
 	padding: 10px;
 }
+.card{
+	word-break: break-word;
+	word-break: break-all;
+}
 .user {
 	display: inline-block;
 	width: 50px;
