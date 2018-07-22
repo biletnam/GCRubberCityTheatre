@@ -67,6 +67,11 @@ jQuery(function(){
 
 	//--routing
 	showLoginView();
+	_socket.on('clearMessages', function(){
+		if(_messageListEl){
+			_messageListEl.html('');
+		}
+	});
 	_socket.on('message', function(_message){
 		console.log('message: ' + _message);
 		let momentDate = moment(_message.dateTime)

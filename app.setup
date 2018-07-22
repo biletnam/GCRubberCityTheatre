@@ -1,1 +1,6 @@
-password:123456
+password=123456
+admin names=kat, John, Matilda
+kat.image=https://www.pexels.com/photo/grey-and-white-short-fur-cat-104827/
+John.image=https://images.pexels.com/photos/209037/pexels-photo-209037.jpeg?auto=compress&cs=tinysrgb&h=350
+Matilda.image=https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&h=350
+

@@ -103,6 +103,7 @@ jQuery(function(){
 				+ '</div>'
 				+ '<button class="btn btn-default">Save</button>'
 			+ '</form>'
+			+ '<button class="clearMessages btn btn-default" type="button">Clear Messages</button>'
 		);
 		var _form = _app.find('.settingsForm');
 		_form.on('submit', function(){
@@ -111,6 +112,9 @@ jQuery(function(){
 				,'adminNames': _form.find('.adminNamesField').val()
 			});
 			return false;
+		});
+		_app.find('.clearMessages').on('click', function(){
+			_socket.emit('clearMessages');
 		});
 		_currentView = 'messages';
 	};
@@ -133,6 +137,12 @@ jQuery(function(){
 	_socket.on('adminLoggedIn', function(){
 		_loggedIn = true;
 		showMessageView();
+	});
+	_socket.on('clearMessages', function(){
+		if(_messageListEl){
+			_messageListEl.html('');
+			_currentMessages = undefined;
+		}
 	});
 	_socket.on('formError', function(_error){
 		var _formEl = _app.find('form');
