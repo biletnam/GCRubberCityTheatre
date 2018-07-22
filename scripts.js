@@ -7,17 +7,17 @@ jQuery(function(){
 	//--controller
 	var showLoginView = function(){
 		_app.html(
-			'<nav class="navbar navbar-expand-lg navbar-light bg-light">'
-			+	'<a class="navbar-brand">Rubber City Theatre</a>'
-			+	'</nav>'
+			'<div >'
+			+	'<img style="display: block; margin-left: auto;	margin-right: auto; margin-top: 50px; width: 50%;" src="https://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/rcttext_1.png">'
+			+	'</div>'
 			+	'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
 				+ '<div class="form-group">'
 				+ '<label for="nameField">Name</label>'
 				+ '<input type="text" class="nameField form-control" id="nameField" name="name" />'
 				+ '</div>'
 				+ '<div class="form-group">'
-				+ '<label for="passwordField">Password</label>'
-				+ '<input class="passwordField form-control" id="passwordField" name="password" type="password" />'
+				+ '<label for="passwordField">Pin</label>'
+				+ '<input class="passwordField form-control" id="passwordField" name="password" type="text" />'
 				+ '</div>'
 				+ '<div>'
 				+ '<button class="btn btn-default">Log In</button>'
