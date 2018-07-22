@@ -13,20 +13,26 @@ var _adminUserNames = _adminUserNamesString.split('|');
 var _approvedMessages = [];
 var _users = [];
 var _userMessages = [];
-//var _adminPassword = process.env['ADMIN_PASSWORD'] || '123456';
 var _adminUsers = [];
 var _userPassword = process.env['USER_PASSWORD'] || '1234';
+var _config={};
 
-var rd = readline.createInterface({
-    input: fs.createReadStream(__dirname+'/app.setup'),
-    output: process.stdout,
-    console: false
-});
-rd.on('line', function(line) {
-	var holder = line.split(":");
-	if (holder[0].toLowerCase()=="password") {
-		_adminPassword = holder[1]; 
-	}
+var lines = require('fs').readFileSync(__dirname+"/app.setup", 'utf-8')
+	.split('\n')
+    .filter(Boolean);
+
+lines.forEach(function(line){
+	var _holder = line.split("=");
+	_config[_holder[0]]=_holder[1];
+	switch (_holder[0].toLowerCase()) {
+		case "password":	
+			_adminPassword = _holder[1]; 
+		break;
+		
+		case "admin names":
+			_adminUserNames=_holder[1].split(",").map(function(_name){ return _name.trim()});
+		break;
+	};
 });
 
 //--sockets
@@ -89,6 +95,11 @@ _io.on('connection', function(_socket){
 				,type: _loginType
 				,value: sanitizeHtml(_messageValue.message)
 			};
+			if(_config[_messageValue.sender + ".image"]){
+				_message.image = _config[_messageValue.sender+".image"];
+			}
+
+
 			if(_loginType === 'admin'){
 				console.log('publicMessage received: ' + _messageValue);
 				if(_adminUsers.indexOf(_socket) !== -1){
