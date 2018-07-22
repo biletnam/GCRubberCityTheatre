@@ -8,8 +8,7 @@ var fs = require('fs'),
 
 //--data
 
-var _adminUserNamesString = process.env['ADMIN_NAMES'] || 'Admin|Other Person';
-var _adminUserNames = _adminUserNamesString.split('|');
+var _adminUserNames = process.env['ADMIN_NAMES'] || 'Admin|Other Person'.split('|');
 var _approvedMessages = [];
 var _users = [];
 var _userMessages = [];
@@ -25,10 +24,10 @@ lines.forEach(function(line){
 	var _holder = line.split("=");
 	_config[_holder[0]]=_holder[1];
 	switch (_holder[0].toLowerCase()) {
-		case "password":	
-			_adminPassword = _holder[1]; 
+		case "password":
+			_adminPassword = _holder[1];
 		break;
-		
+
 		case "admin names":
 			_adminUserNames=_holder[1].split(",").map(function(_name){ return _name.trim()});
 		break;
@@ -150,7 +149,7 @@ _app.get('/', function(_request, _response){
 	_response.sendFile(__dirname + '/index.html');
 });
 _app.get('/admin', function(_request, _response){
-	const output = _fs.readFileSync(__dirname + '/admin.html').toString().replace('ADMIN_NAMES', _adminUserNamesString);
+	const output = _fs.readFileSync(__dirname + '/admin.html').toString().replace('ADMIN_NAMES', _adminUserNames.join(','));
 	_response.send(output);
 });
 //---assets

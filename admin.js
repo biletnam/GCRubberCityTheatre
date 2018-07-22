@@ -6,7 +6,7 @@ jQuery(function(){
 	var _currentMessages;
 	var _loggedIn = false;
 	var _settings = {
-		adminNames: jQuery('[data-admin-names]').data('adminNames').split('|')
+		adminNames: jQuery('[data-admin-names]').data('adminNames').split(',')
 	};
 
 	_app.html(
