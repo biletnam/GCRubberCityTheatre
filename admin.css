@@ -20,3 +20,10 @@
 .messagesList {
 	margin-bottom:5em;
 }
+.messagesList iframe
+,.messagesList img
+,.messagesList object
+,.messagesList video
+{
+	max-width: 100%;
+}
