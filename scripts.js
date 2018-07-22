@@ -4,12 +4,13 @@ jQuery(function(){
 	var _messageListEl;
 	var _userName;
 	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
+	var _loginImage = _app.data('loginImage') || 'https://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/rcttext_1.png';
 
 	//--controller
 	var showLoginView = function(){
 		_app.html(
 			'<div >'
-			+	'<img style="display: block; margin-left: auto;	margin-right: auto; margin-top: 50px; width: 50%;" src="https://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/rcttext_1.png">'
+			+	'<img style="display: block; margin-left: auto;	margin-right: auto; margin-top: 50px; width: 50%;" src="' + _loginImage + '">'
 			+	'</div>'
 			+	'<form class="loginForm" style="max-width:600px; margin:auto; padding:10px">'
 				+ '<div class="form-group">'

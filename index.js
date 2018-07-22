@@ -163,6 +163,9 @@ _app.get('/', function(_request, _response){
 	if(_config['heading name']){
 		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
 	}
+	if(_config['login image']){
+		output = output.replace(/data-login-image="([^"]*)"/, `data-login-image="${_config['login image']}"`);
+	}
 	_response.send(output);
 });
 _app.get('/admin', function(_request, _response){
