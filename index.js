@@ -4,17 +4,29 @@ var _http = require('http').Server(_app);
 var _io = require('socket.io')(_http);
 var sanitizeHtml = require('sanitize-html');
 var fs = require('fs'),
-    readline = require('readline');
+	readline = require('readline');
+
 
 //--data
-
 var _adminUserNames = process.env['ADMIN_NAMES'] || 'Admin|Other Person'.split('|');
 var _approvedMessages = [];
 var _users = [];
 var _userMessages = [];
 var _adminUsers = [];
+var _sanitizeOpts = {
+	allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a',
+	 'b', 'i', 'strong', 'em', 'caption'  ],
+		allowedAttributes: {
+		img: [ 'src' ]
+	},
+allowedSchemes: [ 'http', 'https' ],
+allowedSchemesAppliedToAttributes: [ 'href', 'src', 'cite' ],
+allowProtocolRelative: true,
+};
 var _userPassword = process.env['USER_PASSWORD'];
-var _config={};
+var _config = {
+	'max message length': 5000
+};
 
 var lines = require('fs').readFileSync(__dirname+"/app.setup", 'utf-8')
 	.split('\n')
@@ -60,7 +72,7 @@ _io.on('connection', function(_socket){
 	});
 	_socket.on('userLogin', function(_data){
 		console.log('userLogin event');
-		if(!_data.name){
+		if(!_data.name.trim()){
 			_socket.emit('formError', {message: 'Name must be set.'});
 		}else if(_userPassword && _data.password === _userPassword){
 			_userName = _data.name;
@@ -101,7 +113,7 @@ _io.on('connection', function(_socket){
 				,time: _time
 				,dateTime: _now
 				,type: _loginType
-				,value: sanitizeHtml(_messageValue.message)
+				,value: sanitizeHtml(_messageValue.message.substring(0, _config['max message length'] || 5000), _sanitizeOpts)
 			};
 			if(_config[_messageValue.sender + ".image"]){
 				_message.image = _config[_messageValue.sender+".image"];
@@ -130,7 +142,6 @@ _io.on('connection', function(_socket){
 	_socket.on('setSettings', function(_newSettings){
 		if(_loginType === 'admin'){
 			_userPassword = _newSettings.pin;
-			_adminUserNames = _newSettings.adminNames.split(',').map(function(_name){ return _name.trim(); });
 			//--tell all admin users about change.  They need to know for the `adminNames` in their list.
 			//-! Not sending to other users because of pin and because we don't have a list of other users
 			_adminUsers.forEach(function(_adminUser){
@@ -148,10 +159,22 @@ _http.listen(8021, function(){
 
 //--routing
 _app.get('/', function(_request, _response){
-	_response.sendFile(__dirname + '/index.html');
+	var output = _fs.readFileSync(__dirname + '/index.html').toString();
+	if(_config['heading name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	}
+	if(_config['login image']){
+		output = output.replace(/data-login-image="([^"]*)"/, `data-login-image="${_config['login image']}"`);
+	}
+	_response.send(output);
 });
 _app.get('/admin', function(_request, _response){
-	const output = _fs.readFileSync(__dirname + '/admin.html').toString().replace('ADMIN_NAMES', _adminUserNames.join(','));
+	var output = _fs.readFileSync(__dirname + '/admin.html').toString()
+		.replace('ADMIN_NAMES', _adminUserNames.join(','))
+	;
+	if(_config['heading name']){
+		output = output.replace(/data-header-name="([^"]+)"/, `data-header-name="${_config['heading name']}"`);
+	}
 	_response.send(output);
 });
 //---assets

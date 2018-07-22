@@ -5,6 +5,7 @@ jQuery(function(){
 
 	var _currentMessages;
 	var _loggedIn = false;
+	var _headerName = _app.data('headerName') || 'Rubber City Theatre';
 	var _settings = {
 		adminNames: jQuery('[data-admin-names]').data('adminNames').split(',')
 	};
@@ -12,7 +13,7 @@ jQuery(function(){
 	_app.html(
 		'<header class="appHeader">'
 			+ '<nav class="navbar navbar-expand-lg navbar-light bg-light">'
-			+ '<a class="navbar-brand">Rubber City Theatre - Admin</a>'
+			+ '<a class="navbar-brand">' + _headerName + ' - Admin</a>'
 			+ '<ul class="navbar-nav">'
 			+ '<li class="nav-item"><a class="settingsNavAction nav-link">Settings</a></li>'
 			+ '<li class="nav-item"><a class="messagesNavAction nav-link">Messages</a></li>'
@@ -97,10 +98,6 @@ jQuery(function(){
 				+ '<label for="pinField">Pin</label>'
 				+ '<input class="pinField form-control" id="pinField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.pin || '') + '" />'
 				+ '</div>'
-				+ '<div class="form-group">'
-				+ '<label for="adminNamesField">Names</label>'
-				+ '<input class="adminNamesField form-control" id="adminNamesField" name="pin" autocomplete="off" autofocus="autofocus" required="required" value="' + (_settings.adminNames ? _settings.adminNames.join(', ') : null) + '" />'
-				+ '</div>'
 				+ '<button class="btn btn-default">Save</button>'
 			+ '</form>'
 			+ '<button class="clearMessages btn btn-default" type="button">Clear Messages</button>'
@@ -109,7 +106,6 @@ jQuery(function(){
 		_form.on('submit', function(){
 			_socket.emit('setSettings', {
 				'pin': _form.find('.pinField').val()
-				,'adminNames': _form.find('.adminNamesField').val()
 			});
 			return false;
 		});

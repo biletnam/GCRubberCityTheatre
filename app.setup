@@ -1,6 +1,7 @@
 password=123456
-user password=1234
+login image=https://www.rubbercitytheatre.com/uploads/1/7/2/1/17213748/published/rcttext_1.png
 admin names=kat, John, Matilda
-kat.image=https://www.pexels.com/photo/grey-and-white-short-fur-cat-104827/
+heading name=Rubber City Theatre
+kat.image=https://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg
 John.image=https://images.pexels.com/photos/209037/pexels-photo-209037.jpeg?auto=compress&cs=tinysrgb&h=350
 Matilda.image=https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&h=350
